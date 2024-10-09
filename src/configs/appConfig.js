@@ -1,0 +1,11 @@
+import dotenv from "dotenv";
+dotenv.config();
+
+const appConfig = {
+	port: process.env.PORT || 5000,
+	accessCode: process.env.ACCESS_CODE,
+	db_url: process.env.DATABASE_URL,
+	tokenSecret: process.env.TOKEN_SECRET,
+};
+
+export default appConfig;
