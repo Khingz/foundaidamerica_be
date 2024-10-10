@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import appConfig from "../configs/appConfig.js";
 
-const connectDB = () => {
+export const connectDB = () => {
 	mongoose
 		.connect(appConfig.db_url, {
 			useNewUrlParser: true,
@@ -15,4 +15,7 @@ const connectDB = () => {
 		});
 };
 
-export default connectDB;
+
+export const isValidObjectId = (id) => {
+	return mongoose.Types.ObjectId.isValid(id);
+}

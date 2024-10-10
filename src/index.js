@@ -2,7 +2,8 @@ import express from 'express';
 import appConfig from './configs/appConfig.js';
 import authRouter from './routes/authRoute.js';
 import { errorHandler, routeNotFound } from './middleware/errors.js';
-import connectDB from './utils/connectdB.js';
+import {connectDB} from './utils/connectdB.js';
+import contactRouter from './routes/contactUsRoute.js';
 
 const port = appConfig.PORT || 5000;
 
@@ -12,6 +13,7 @@ app.use(express.urlencoded({extended: false}));
 
 
 app.use('/api/auth', authRouter);
+app.use('/api/contact-us', contactRouter);
 
 app.use(routeNotFound);
 app.use(errorHandler);

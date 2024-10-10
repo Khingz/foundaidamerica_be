@@ -6,7 +6,7 @@ const validate = (req, res, next) => {
 		return next();
 	}
 	const formattedErrors = errors.array().map((err) => ({ msg: err.msg }));
-	return res.status(400).json({ errors: formattedErrors });
+	return res.status(422).json({ errors: formattedErrors });
 };
 
 const createUserValidationRules = [
@@ -31,7 +31,8 @@ const changePasswordValidationRules = [
 ];
 
 const createContactUsRules = [
-	body("email").isEmail().withMessage("Enter a valid email"),
+	body("fullname").isString().withMessage("Fullname is required"),
+	body("email").isEmail().withMessage("Please enter a valid email"),
 	body("message")
 		.isString()
 		.withMessage("Enter your message")
