@@ -4,6 +4,7 @@ import authRouter from "./routes/authRoute.js";
 import { errorHandler, routeNotFound } from "./middleware/errors.js";
 import { connectDB } from "./utils/dbUtils.js";
 import contactRouter from "./routes/contactUsRoute.js";
+import subscribeRouter from "./routes/subscribeRoute.js";
 
 const port = appConfig.PORT || 5000;
 
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/auth", authRouter);
 app.use("/api/contact-us", contactRouter);
+app.use("/api/subscribers", subscribeRouter);
 
 app.use(routeNotFound);
 app.use(errorHandler);

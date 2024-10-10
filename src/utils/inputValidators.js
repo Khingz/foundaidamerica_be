@@ -40,10 +40,15 @@ const createContactUsRules = [
 		.withMessage("Your message is too short"),
 ];
 
+const subscribeValidationRules = [
+	body("email").isEmail().withMessage("Please enter a valid email")
+]
+
 export {
 	createUserValidationRules,
 	validate,
 	loginUserValidationRules,
 	changePasswordValidationRules,
 	createContactUsRules,
+	subscribeValidationRules
 };
