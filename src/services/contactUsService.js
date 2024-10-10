@@ -1,7 +1,7 @@
 import appConfig from "../configs/appConfig.js";
 import { HttpError } from "../middleware/errors.js";
 import Contact from "../models/contactUsModel.js";
-import { isValidObjectId } from "../utils/connectdB.js";
+import { handlePagination, isValidObjectId } from "../utils/dbUtils.js";
 
 export class ContactUsService {
 	async createContactUs(fullname, email, message) {
@@ -21,9 +21,13 @@ export class ContactUsService {
 		}
 	}
 
-	async getAllContactUs() {
+	async getAllContactUs({ page, limit, searchQuery }) {
 		try {
-			const data = await Contact.find();
+			const data = await handlePagination(Contact, {
+				page,
+				limit,
+				searchQuery,
+			});
 			return data;
 		} catch (error) {
 			if (error instanceof HttpError) {

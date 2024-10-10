@@ -20,8 +20,13 @@ export const addContactUs = async (req, res, next) => {
 
 export const getAllContactUs = async (req, res, next) => {
 	try {
-		const response = await contactUsService.getAllContactUs();
-		sendJsonResponse(res, 200, response, "Data fetched successfully")
+		const { page = 1, limit = 10, ...searchQuery } = req.query;
+		const response = await contactUsService.getAllContactUs({
+			page: parseInt(page, 10),
+			limit: parseInt(limit, 10),
+			searchQuery,
+		});
+		sendJsonResponse(res, 200, response, "Data fetched successfully");
 	} catch (error) {
 		next(error);
 	}
@@ -29,12 +34,12 @@ export const getAllContactUs = async (req, res, next) => {
 
 export const getContactUsById = async (req, res, next) => {
 	try {
-		const {id} = req.params
+		const { id } = req.params;
 		if (!id) {
-			throw HttpError(400, "Please pass an contact us id")
+			throw HttpError(400, "Please pass an contact us id");
 		}
 		const response = await contactUsService.getContactUsById(id);
-		sendJsonResponse(res, 200, response, "Data fetched successfully")
+		sendJsonResponse(res, 200, response, "Data fetched successfully");
 	} catch (error) {
 		next(error);
 	}
@@ -42,12 +47,12 @@ export const getContactUsById = async (req, res, next) => {
 
 export const deleteContactUs = async (req, res, next) => {
 	try {
-		const {id} = req.params
+		const { id } = req.params;
 		if (!id) {
-			throw HttpError(400, "Please pass an contact us id")
+			throw HttpError(400, "Please pass an contact us id");
 		}
 		await contactUsService.deleteContactUs(id);
-		sendJsonResponse(res, 200, "Data deleted successfully")
+		sendJsonResponse(res, 200, "Data deleted successfully");
 	} catch (error) {
 		next(error);
 	}
