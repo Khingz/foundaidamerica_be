@@ -6,6 +6,7 @@ const appConfig = {
 	accessCode: process.env.ACCESS_CODE,
 	db_url: process.env.DATABASE_URL,
 	tokenSecret: process.env.TOKEN_SECRET,
+	serverUrl: process.env.SERVER_URL
 };
 
 export default appConfig;
