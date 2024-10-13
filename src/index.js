@@ -5,6 +5,7 @@ import { errorHandler, routeNotFound } from "./middleware/errors.js";
 import { connectDB } from "./utils/dbUtils.js";
 import contactRouter from "./routes/contactUsRoute.js";
 import subscribeRouter from "./routes/subscribeRoute.js";
+import volunteerRouter from "./routes/volunteerRoute.js";
 
 const port = appConfig.PORT || 5000;
 
@@ -15,12 +16,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api/auth", authRouter);
 app.use("/api/contact-us", contactRouter);
 app.use("/api/subscribers", subscribeRouter);
+app.use("/api/volunteers", volunteerRouter);
 
 app.use(routeNotFound);
 app.use(errorHandler);
 
-const startServer = () => {
-	connectDB();
+const startServer = async () => {
+	await connectDB();
 	app.listen(port, () => {
 		console.log(`Server is running on port ${port}`);
 	});

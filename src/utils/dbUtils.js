@@ -2,15 +2,13 @@ import mongoose from "mongoose";
 import appConfig from "../configs/appConfig.js";
 import { HttpError } from "../middleware/errors.js";
 
-export const connectDB = () => {
-	mongoose
-		.connect(appConfig.db_url)
-		.then(() => {
-			console.log("Connected to database!");
-		})
-		.catch((err) => {
-			console.log("Connection failed!", err);
-		});
+export const connectDB = async () => {
+	try {
+		await mongoose.connect(appConfig.db_url);
+		console.log("Connected to database!");
+	} catch (err) {
+		console.log("Connection failed!", err);
+	}
 };
 
 export const isValidObjectId = (id) => {

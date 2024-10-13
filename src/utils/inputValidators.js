@@ -44,11 +44,27 @@ const subscribeValidationRules = [
 	body("email").isEmail().withMessage("Please enter a valid email")
 ]
 
+const createVolunteerValidationRules = [
+	body("fullname").isString().withMessage("Fullname is required"),
+	body("email").isEmail().withMessage("Please enter a valid email"),
+	body("phone_number").isString().withMessage("Phone number is required"),
+	body("address").isString().withMessage("Address is required"),
+	body("city").isString().withMessage("City is required"),
+	body("state").isString().withMessage("State is required"),
+	body("country").isString().withMessage("Country is required"),
+	body("twitter").optional(),
+	body("facebook").optional(),
+	body("instagram").optional(),
+	body("date_of_birth").isString().withMessage("Date of birth is required"),
+	body("volunteer_reason").isString().withMessage("Volunteer reason is required"),
+]
+
 export {
 	createUserValidationRules,
 	validate,
 	loginUserValidationRules,
 	changePasswordValidationRules,
 	createContactUsRules,
-	subscribeValidationRules
+	subscribeValidationRules,
+	createVolunteerValidationRules
 };
