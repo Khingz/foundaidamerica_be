@@ -12,6 +12,7 @@ const routeNotFound = (req, res, next) => {
 };
 
 const errorHandler = (error, req, res, next) => {
+	console.error(error);
 	if (error instanceof HttpError) {
 		const { statusCode, message } = error;
 		res.status(error.statusCode).json({

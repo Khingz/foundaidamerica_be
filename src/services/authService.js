@@ -12,7 +12,7 @@ export class AuthService {
 
 			const userExist = await User.findOne({ username });
 			if (userExist) {
-				throw new HttpError(400, "User already exists");
+				throw new HttpError(400, "User with username already exists");
 			}
 
 			const hashedPassword = await hashPassword(password);

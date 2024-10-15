@@ -8,10 +8,26 @@ import subscribeRouter from "./routes/subscribeRoute.js";
 import volunteerRouter from "./routes/volunteerRoute.js";
 import cron from "node-cron";
 import axios from "axios";
+import cors from "cors";
+import { checkOrigin } from "./utils/checkOrigin.js";
 
 const port = appConfig.PORT || 5000;
 
+const allowedOrigins = [
+	"http://localhost:3000",
+	"https://foundaid.vercel.app/",
+];
+
 const app = express();
+app.use(
+	cors({
+		origin: checkOrigin(allowedOrigins),
+		methods: ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
+		credentials: true,
+		allowedHeaders: ["Content-Type", "Authorization"],
+	})
+);
+app.options("*", cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
