@@ -10,9 +10,18 @@ const validate = (req, res, next) => {
 };
 
 const createUserValidationRules = [
-	body("access_code").isString().withMessage("Access code is required"),
-	body("fullname").isString().withMessage("Fullname is required"),
-	body("username").isString().withMessage("Email is required"),
+	body("access_code")
+		.isString()
+		.isLength({ min: 1 })
+		.withMessage("Access code is required"),
+	body("fullname")
+		.isString()
+		.isLength({ min: 1 })
+		.withMessage("Fullname is required"),
+	body("username")
+		.isString()
+		.isLength({ min: 1 })
+		.withMessage("Username is required"),
 	body("password")
 		.isString()
 		.withMessage("Password is required")
@@ -21,18 +30,36 @@ const createUserValidationRules = [
 ];
 
 const loginUserValidationRules = [
-	body("username").isString().withMessage("Email is required"),
-	body("password").isString().withMessage("Password is required"),
+	body("username")
+		.isString()
+		.isLength({ min: 1 })
+		.withMessage("Username is required"),
+	body("password")
+		.isString()
+		.isLength({ min: 1 })
+		.withMessage("Password is required"),
 ];
 
 const changePasswordValidationRules = [
-	body("old_password").isString().withMessage("Old password is required"),
-	body("new_password").isString().withMessage("New password is required"),
+	body("old_password")
+		.isString()
+		.isLength({ min: 1 })
+		.withMessage("Old password is required"),
+	body("new_password")
+		.isString()
+		.isLength({ min: 1 })
+		.withMessage("New password is required"),
 ];
 
 const createContactUsRules = [
-	body("fullname").isString().withMessage("Fullname is required"),
-	body("email").isEmail().withMessage("Please enter a valid email"),
+	body("fullname")
+		.isString()
+		.isLength({ min: 1 })
+		.withMessage("Fullname is required"),
+	body("email")
+		.isEmail()
+		.isLength({ min: 1 })
+		.withMessage("Please enter a valid email"),
 	body("message")
 		.isString()
 		.withMessage("Enter your message")
@@ -41,23 +68,49 @@ const createContactUsRules = [
 ];
 
 const subscribeValidationRules = [
-	body("email").isEmail().withMessage("Please enter a valid email")
-]
+	body("email")
+		.isEmail()
+		.isLength({ min: 1 })
+		.withMessage("Please enter a valid email"),
+];
 
 const createVolunteerValidationRules = [
-	body("fullname").isString().withMessage("Fullname is required"),
+	body("fullname")
+		.isString()
+		.isLength({ min: 1 })
+		.withMessage("Fullname is required"),
 	body("email").isEmail().withMessage("Please enter a valid email"),
-	body("phone_number").isString().withMessage("Phone number is required"),
-	body("address").isString().withMessage("Address is required"),
-	body("city").isString().withMessage("City is required"),
-	body("state").isString().withMessage("State is required"),
-	body("country").isString().withMessage("Country is required"),
+
+	body("address")
+		.isString()
+		.isLength({ min: 1 })
+		.withMessage("Address is required"),
+	body("city").isString().isLength({ min: 1 }).withMessage("City is required"),
+	body("state")
+		.isString()
+		.isLength({ min: 1 })
+		.withMessage("State is required"),
+	body("country")
+		.isString()
+		.isLength({ min: 1 })
+		.withMessage("Country is required"),
+	body("phone_number")
+		.isString()
+		.isLength({ min: 1 })
+		.withMessage("Phone number is required"),
+	body("occupation")
+		.isString()
+		.isLength({ min: 1 })
+		.withMessage("Occupation is required"),
 	body("twitter").optional(),
 	body("facebook").optional(),
 	body("instagram").optional(),
-	body("date_of_birth").isString().withMessage("Date of birth is required"),
-	body("volunteer_reason").isString().withMessage("Volunteer reason is required"),
-]
+	body("date_of_birth").optional(),
+	body("volunteer_reason")
+		.isString()
+		.isLength({ min: 1 })
+		.withMessage("Volunteer reason is required"),
+];
 
 export {
 	createUserValidationRules,
@@ -66,5 +119,5 @@ export {
 	changePasswordValidationRules,
 	createContactUsRules,
 	subscribeValidationRules,
-	createVolunteerValidationRules
+	createVolunteerValidationRules,
 };

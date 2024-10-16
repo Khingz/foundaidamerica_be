@@ -40,7 +40,7 @@ const VolunteerSchema = new mongoose.Schema(
 		},
         occupation: {
 			type: String,
-			required: false,
+			required: true,
 		},
         volunteer_reason: {
 			type: String,
@@ -48,7 +48,6 @@ const VolunteerSchema = new mongoose.Schema(
 		},
         date_of_birth: {
             type: Date,
-            required: true
         },
 		isDeleted: {
 			type: Boolean,

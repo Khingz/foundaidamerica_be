@@ -10,6 +10,7 @@ export class VolunteerService {
 		address,
 		city,
 		state,
+		occupation,
 		twitter,
 		facebook,
 		instagram,
@@ -21,6 +22,7 @@ export class VolunteerService {
 			if (isVolunteerExist) {
 				throw new HttpError(409, "Volunteer already exist");
 			}
+			const dob = new Date(date_of_birth) ? date_of_birth : null
 			const volunteer = new Volunteer({
 				fullname,
 				email,
@@ -28,10 +30,11 @@ export class VolunteerService {
 				address,
 				city,
 				state,
+				occupation,
 				twitter,
 				facebook,
 				instagram,
-				date_of_birth: new Date(date_of_birth),
+				date_of_birth: dob,
 				volunteer_reason,
 			});
 			await volunteer.save();

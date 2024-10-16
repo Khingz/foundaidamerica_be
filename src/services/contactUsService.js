@@ -5,6 +5,8 @@ import { handlePagination, isValidObjectId } from "../utils/dbUtils.js";
 
 export class ContactUsService {
 	async createContactUs(fullname, email, message) {
+		console.log(fullname,email,message);
+		
 		try {
 			const newContact = new Contact({
 				fullname,
