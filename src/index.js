@@ -15,7 +15,7 @@ const port = appConfig.PORT || 5000;
 
 const allowedOrigins = [
 	"http://localhost:3000",
-	"https://foundaid.vercel.app/",
+	"https://foundaid.vercel.app",
 ];
 
 const app = express();
