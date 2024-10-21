@@ -64,3 +64,11 @@ export const handlePagination = async (
 		throw new HttpError(500, "Internal server error");
 	}
 };
+
+export const generateUserNotification = (users, notification) => {
+	const userNotifications = users.map((admin) => ({
+		user: admin._id,
+		notification: notification._id,
+	}));
+	return userNotifications;
+};

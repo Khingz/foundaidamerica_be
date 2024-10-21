@@ -58,7 +58,6 @@ const createContactUsRules = [
 		.withMessage("Fullname is required"),
 	body("email")
 		.isEmail()
-		.isLength({ min: 1 })
 		.withMessage("Please enter a valid email"),
 	body("message")
 		.isString()
@@ -70,7 +69,6 @@ const createContactUsRules = [
 const subscribeValidationRules = [
 	body("email")
 		.isEmail()
-		.isLength({ min: 1 })
 		.withMessage("Please enter a valid email"),
 ];
 

@@ -1,6 +1,11 @@
 import { HttpError } from "../middleware/errors.js";
 import Subscribe from "../models/subscribeModel.js";
 import { handlePagination } from "../utils/dbUtils.js";
+import { NotificationService } from "./notificationService.js";
+import { getIoInstance } from "../websocket/websocket.js";
+import { broadcastNotification } from "../websocket/notificationEvents.js";
+
+const notificatioService = new NotificationService();
 
 export class SubscribeService {
 	async subscribe(email) {
@@ -13,10 +18,16 @@ export class SubscribeService {
 				email,
 			});
 			await newSubscriber.save();
+			const notification = await notificatioService.createNotification({
+				message: `A new user with email ${email} subscribed`,
+			});
+			const io = getIoInstance();
+
+			broadcastNotification(io, notification);
 			return;
 		} catch (error) {
-            console.log(error);
-            
+			console.log(error);
+
 			if (error instanceof HttpError) {
 				throw error;
 			}
@@ -50,9 +61,6 @@ export class SubscribeService {
 			});
 			return data;
 		} catch (error) {
-			if (error instanceof HttpError) {
-				throw error;
-			}
 			throw new HttpError(500, "Internal server error");
 		}
 	}

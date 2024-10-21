@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Socket.IO Client Test</title>
+	</head>
+	<body>
+		<h1>Socket.IO Client Test</h1>
+		<button id="sendMessageBtn">Send Message</button>
+		<div id="messages"></div>
+
+		<!-- Include Socket.IO client script -->
+		<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+		<script>
+			// Connect to the Socket.IO server (replace with your actual server URL)
+			const socket = io("http://localhost:5001", {
+				query: {
+					token:
+						"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJzIiwiaWF0IjoxNzI5MjY0NTUxLCJleHAiOjE3MjkzNTA5NTF9.anbHHws5GtLv2kDPXba6ZPrntr3fX4V6EK4Os-NZI8Q",
+				},
+			});
+
+			// Listen for successful connection
+			socket.on("connect", () => {
+				console.log("Connected to Socket.IO server");
+				// displayMessage("Connected to Socket.IO server");
+			});
+
+			// Handle connection error
+			// socket.on("connect_error", (err) => {
+			// 	console.error("Connection error:", err.message);
+			// 	// displayMessage(`Connection error: ${err.message}`);
+			// });
+
+			// Listen for disconnection
+			socket.on("disconnect", () => {
+				console.log("Disconnected from server");
+				// displayMessage("Disconnected from server");
+			});
+
+			// Listen for notifications from the server
+			socket.on("notification", (data) => {
+				console.log("Received notification:", data);
+			});
+
+			// Emit message to the server when button is clicked
+			document
+				.getElementById("sendMessageBtn")
+				.addEventListener("click", () => {
+					const testMessage = {
+						user: "Test User",
+						message: "Hello from the client!",
+					};
+
+					// Send the contactMessage event to the server
+					socket.emit("contactMessage", testMessage, (response) => {
+						console.log("Server response to contactMessage:", response);
+						// displayMessage(`Server response: ${JSON.stringify(response)}`);
+					});
+				});
+
+			// Helper function to display messages on the web page
+			function displayMessage(message) {
+				const messageDiv = document.getElementById("messages");
+				const newMessage = document.createElement("p");
+				newMessage.textContent = message;
+				messageDiv.appendChild(newMessage);
+			}
+		</script>
+	</body>
+</html>

@@ -16,9 +16,9 @@ export const generateToken = async (username) => {
 
 export const verifyToken = async (token) => {
 	try {
-		const payload = jwt.verify(token, appConfig.tokenSecret);
+		const payload = await jwt.verify(token, appConfig.tokenSecret);
 		return payload;
 	} catch (error) {
-		throw error;
+		return false;
 	}
 };

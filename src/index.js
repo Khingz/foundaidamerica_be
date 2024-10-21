@@ -1,3 +1,4 @@
+import http from "http";
 import express from "express";
 import appConfig from "./configs/appConfig.js";
 import authRouter from "./routes/authRoute.js";
@@ -10,15 +11,21 @@ import cron from "node-cron";
 import axios from "axios";
 import cors from "cors";
 import { checkOrigin } from "./utils/checkOrigin.js";
+import { initWebSocket } from "./websocket/websocket.js";
+import notificationRouter from "./routes/notificationRoute.js";
 
-const port = appConfig.PORT || 5000;
+const app = express();
+const server = http.createServer(app);
+const io = initWebSocket(server);
+
+const port = appConfig.port || 5000;
 
 const allowedOrigins = [
 	"http://localhost:3000",
 	"https://foundaid.vercel.app",
+	"http://127.0.0.1:5500",
 ];
 
-const app = express();
 app.use(
 	cors({
 		origin: checkOrigin(allowedOrigins),
@@ -39,6 +46,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/contact-us", contactRouter);
 app.use("/api/subscribers", subscribeRouter);
 app.use("/api/volunteers", volunteerRouter);
+app.use("/api/notifications", notificationRouter);
 
 // Schedule the cron job to ping the server every 5 minutes
 cron.schedule("*/5 * * * *", async () => {
@@ -55,7 +63,7 @@ app.use(errorHandler);
 
 const startServer = async () => {
 	await connectDB();
-	app.listen(port, () => {
+	server.listen(port, () => {
 		console.log(`Server is running on port ${port}`);
 	});
 };
