@@ -49,7 +49,7 @@ app.use("/api/volunteers", volunteerRouter);
 app.use("/api/notifications", notificationRouter);
 
 // Schedule the cron job to ping the server every 5 minutes
-cron.schedule("*/5 * * * *", async () => {
+cron.schedule("*/20 * * * *", async () => {
 	try {
 		console.log("Pinging the server to prevent sleep...");
 		await axios.get(appConfig.serverUrl);

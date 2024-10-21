@@ -5,7 +5,7 @@ const notificationService = new NotificationService();
 
 export const getUserNotifications = async (req, res, next) => {
 	try {
-		const { page = 1, limit = 1 } = req.query;
+		const { page = 1, limit = 20 } = req.query;
         const query = {
             user: req.user._id,
             isDeleted: false

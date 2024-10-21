@@ -1,5 +1,6 @@
 import { Server } from "socket.io";
 import { verifyToken } from "../utils/auth.js";
+import appConfig from "../configs/appConfig.js";
 
 let ioInstance = null;
 
@@ -7,7 +8,7 @@ let ioInstance = null;
 export const initWebSocket = (server) => {
 	const io = new Server(server, {
 		cors: {
-			origin: "http://localhost:3000",
+			origin: appConfig.clientUrl,
 			methods: ["GET", "POST"],
 			allowedHeaders: ["Authorization"],
 			credentials: true,
