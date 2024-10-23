@@ -1,6 +1,7 @@
 import { Server } from "socket.io";
 import { verifyToken } from "../utils/auth.js";
 import appConfig from "../configs/appConfig.js";
+import { handleNotificationEvents } from "./notificationEvents.js";
 
 let ioInstance = null;
 
@@ -31,6 +32,8 @@ export const initWebSocket = (server) => {
 
 	io.on("connection", (socket) => {
 		console.log("A new client connected:", socket.id);
+
+		handleNotificationEvents(io, socket)
 
 		socket.on("disconnect", () => {
 			console.log("disconnected");
