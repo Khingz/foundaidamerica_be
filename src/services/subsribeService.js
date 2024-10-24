@@ -59,6 +59,7 @@ export class SubscribeService {
 				limit,
 				searchQuery,
 			});
+
 			return data;
 		} catch (error) {
 			throw new HttpError(500, "Internal server error");

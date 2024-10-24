@@ -34,7 +34,7 @@ export const buildQuery = (reqQuery) => {
 
 export const handlePagination = async (
 	model,
-	{ page, limit, sort = {}, searchQuery } = {}
+	{ page, limit, sort = {createdAt: -1}, searchQuery } = {}
 ) => {
 	try {
 		const pageNumber = Math.max(1, parseInt(page, 10));
