@@ -18,6 +18,18 @@ export const isValidObjectId = (id) => {
 export const buildQuery = (reqQuery) => {
 	const query = {};
 
+	const startDate =
+		reqQuery.startDate && reqQuery.startDate !== ""
+			? new Date(reqQuery.startDate)
+			: null;
+	const endDate =
+		reqQuery.endDate && reqQuery.endDate !== ""
+			? new Date(reqQuery.endDate)
+			: null;
+
+	delete reqQuery.startDate;
+	delete reqQuery.endDate;
+
 	Object.entries(reqQuery).forEach(([key, value]) => {
 		if (value !== undefined && value !== "") {
 			if (value === "true" || value === "false") {
@@ -29,12 +41,26 @@ export const buildQuery = (reqQuery) => {
 			}
 		}
 	});
+
+	if (startDate || endDate) {
+		query.createdAt = {};
+		if (startDate) query.createdAt.$gte = startDate;
+		if (endDate) query.createdAt.$lte = endDate;
+	}
+
 	return query;
 };
 
 export const handlePagination = async (
 	model,
-	{ page, limit, sort = {createdAt: -1}, searchQuery } = {}
+	{
+		page,
+		limit,
+		sort = { createdAt: -1 },
+		searchQuery,
+		startDate,
+		endDate,
+	} = {}
 ) => {
 	try {
 		const pageNumber = Math.max(1, parseInt(page, 10));
@@ -42,7 +68,7 @@ export const handlePagination = async (
 
 		const skip = (pageNumber - 1) * limitNumber;
 
-		const query = buildQuery(searchQuery);
+		const query = buildQuery(searchQuery, startDate, endDate);
 
 		const totalItems = await model.countDocuments(query);
 

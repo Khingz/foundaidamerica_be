@@ -26,7 +26,7 @@ export const unsubscribe = async (req, res, next) => {
 
 export const getSubscribers = async (req, res, next) => {
 	try {
-		const { page = 1, limit = 1000, ...searchQuery } = req.query;
+		const { page = 1, limit = 50, ...searchQuery } = req.query;
 		const response = await subscribeService.getSubscribers({
 			page: parseInt(page, 10),
 			limit: parseInt(limit, 10),

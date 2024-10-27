@@ -57,7 +57,7 @@ export class SubscribeService {
 			const data = await handlePagination(Subscribe, {
 				page,
 				limit,
-				searchQuery,
+				searchQuery
 			});
 
 			return data;
